@@ -15,3 +15,5 @@ from .models import Task
 
 class TaskList(ListView):
     model = Task
+    # setting context object name for task_list.html
+    context_object_name = 'tasks'
