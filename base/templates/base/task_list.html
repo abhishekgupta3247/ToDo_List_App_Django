@@ -23,13 +23,18 @@
 <h1>My To Do List {{color}}</h1> -->
 
 
-<!-- Commented out search bar -->
-<!-- <a href="{% url 'task-create' %}">Add Task</a> -->
-<!-- <form method="GET"> -->
+
+<div id="search-add-wrapper">
+    <!-- search bar -->
+    <form method="GET" style="margin-top: 20px; display: flex;">
     <!-- value="{{search_input}} for clearing search box data automatically -->
-    <!-- <input type="text" name="search-area" value="{{search_input}}"> -->
-    <!-- <input type="submit" value="Search"> -->
-<!-- </form> -->
+        <input type="text" name="search-area" value="{{search_input}}">
+        <input type="submit" value="Search">
+    </form>
+    <a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
+    <!-- Add Task = &#x2b; -->
+</div>
+
 
 
 
