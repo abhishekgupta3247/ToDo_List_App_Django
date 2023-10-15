@@ -14,7 +14,21 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+from django.contrib.auth.views import LoginView
+
 from .models import Task
+
+
+
+class CustomLoginView(LoginView):
+    template_name = 'base/login.html'
+    fields = '__all__' 
+    redirect_authenticated_user = True #if the user is authenticated they shouldn't be allowed on this page
+
+    #success_url = reverse_lazy('tasks')
+    #same but we defined customized function by own
+    def get_success_url(self):
+        return reverse_lazy('tasks')
 
 
 # looks for task_list.html
@@ -32,14 +46,14 @@ class TaskDetail(DetailView):
 # Creating tasks imported reverse lazy too for this one
 class TaskCreate(CreateView):
     model = Task
-    fields = '__all__'
+    fields = '__all__' #ModelForm
     success_url = reverse_lazy('tasks')
 
 
 # Update Task imported UpdateView
 class TaskUpdate(UpdateView):
     model = Task
-    fields = '__all__'
+    fields = '__all__' #ModelForm 
     success_url = reverse_lazy('tasks')
 
 # Delete Task imported DeleteView
