@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render
 
 # Create your views here.
@@ -40,6 +41,15 @@ class TaskList(LoginRequiredMixin , ListView):
     model = Task
     # setting context object name for task_list.html
     context_object_name = 'tasks'
+
+
+    # The data of a particular user is visible to only that partcular user not to everyone
+    def get_context_data(self , **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['color'] = 'red'
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['count'] = context['tasks'].filter(complete=False).count() # we just want to know the count of incomplete items
+        return context
 
 # looks for task_detail.html
 class TaskDetail(LoginRequiredMixin, DetailView):
