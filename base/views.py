@@ -1,4 +1,6 @@
 from typing import Any
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -57,17 +59,24 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     context_object_name = 'task'
     template_name = 'base/task.html' #we changed task_detail.htm to task.html
 
+
 # Creating tasks imported reverse lazy too for this one
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
-    fields = '__all__' #ModelForm
+    # fields = '__all__' #ModelForm
+    fields = ['title' , 'description' , 'complete']
     success_url = reverse_lazy('tasks')
 
+    # Fixing user dropdown (selection) MAKING IT DEFAULT
+    def form_valid(self , form):
+        form.instance.user = self.request.user
+        return super(TaskCreate , self).form_valid(form)
 
 # Update Task imported UpdateView
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
-    fields = '__all__' #ModelForm 
+    # fields = '__all__' #ModelForm 
+    fields = ['title' , 'description' , 'complete']
     success_url = reverse_lazy('tasks')
 
 # Delete Task imported DeleteView
