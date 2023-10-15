@@ -14,7 +14,7 @@ from django.shortcuts import render
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.urls import reverse_lazy
 
 from django.contrib.auth.views import LoginView
@@ -22,6 +22,10 @@ from django.contrib.auth.views import LoginView
 # Resctritc few pages for the user
 # We want the user to see the LOGIN page if loggedOut not the task_list.html which is the url 5000port
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+# Register User 
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 from .models import Task
 
@@ -36,6 +40,13 @@ class CustomLoginView(LoginView):
     #same but we defined customized function by own
     def get_success_url(self):
         return reverse_lazy('tasks')
+    
+
+class RegisterPage(FormView):
+    template_name = 'base/register.html'
+    form_class = UserCreationForm
+    redirect_authenticated_user = True 
+    success_url = reverse_lazy('tasks')
 
 
 # looks for task_list.html
