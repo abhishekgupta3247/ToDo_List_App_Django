@@ -1,8 +1,15 @@
 {% extends 'base/main.html' %}
 {% block content %}
 
+
+<div class="header-bar">
+    <a href="{% url 'tasks' %}">&#8592; Back</a>
+    <!-- Go Back = &#8592; -->
+</div>
+
+
 <h3>Task Form</h3>
-<a href="{% url 'tasks' %}">Go Back</a>
+<!-- <a href="{% url 'tasks' %}">Go Back</a> -->
 
 <form method="POST" action="">
     <!-- protects from cross site forgery -->
