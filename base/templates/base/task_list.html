@@ -56,25 +56,4 @@
     {% endfor %}
 </div>
 
-
-
-
-<table>
-    <tr>
-        <th>Item</th>
-        <th></th>
-        <th></th>
-    </tr>
-    {% for task in tasks %}
-    <tr>
-        <td>{{task.title}}</td>
-        <!-- <td><a href="{% url 'task' task.id %}">View</a></td> -->
-        <td><a href="{% url 'task-update' task.id %}">Edit</a></td>
-        <td><a href="{%  url 'task-delete' task.id %}">Delete</a></td>
-    </tr>
-    {% empty %}
-    <h3>No items in lists</h3>
-    {% endfor %}
-</table>
-
 {% endblock content %}
