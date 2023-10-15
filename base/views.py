@@ -16,6 +16,10 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth.views import LoginView
 
+# Resctritc few pages for the user
+# We want the user to see the LOGIN page if loggedOut not the task_list.html which is the url 5000port
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import Task
 
 
@@ -32,32 +36,32 @@ class CustomLoginView(LoginView):
 
 
 # looks for task_list.html
-class TaskList(ListView):
+class TaskList(LoginRequiredMixin , ListView):
     model = Task
     # setting context object name for task_list.html
     context_object_name = 'tasks'
 
 # looks for task_detail.html
-class TaskDetail(DetailView):
+class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     context_object_name = 'task'
     template_name = 'base/task.html' #we changed task_detail.htm to task.html
 
 # Creating tasks imported reverse lazy too for this one
-class TaskCreate(CreateView):
+class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = '__all__' #ModelForm
     success_url = reverse_lazy('tasks')
 
 
 # Update Task imported UpdateView
-class TaskUpdate(UpdateView):
+class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     fields = '__all__' #ModelForm 
     success_url = reverse_lazy('tasks')
 
 # Delete Task imported DeleteView
-class DeleteView(DeleteView):
+class DeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     context_object_name = 'task'
     success_url = reverse_lazy('tasks')
